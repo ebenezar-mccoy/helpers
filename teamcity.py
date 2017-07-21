@@ -3,9 +3,9 @@ import base64
 import fire
 import json
 
-user = 'makowsm'
-password = ''  # base64 encoded
-host = 'http://chepri.comp-ci.net:8111/'
+user = 'user'
+password = 'password'  # base64 encoded
+host = 'http://teamcity.host:8111/'
 
 
 class teamcity(object):
