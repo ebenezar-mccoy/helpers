@@ -4,7 +4,9 @@ import fire
 import json
 
 user = 'user'
-password = 'password'  # base64 encoded
+# python -c 'import base64; print(base64.b64encode("password".encode("utf-8")))'
+# ruby -rbase64 -e 'puts Base64.encode64("password")'
+password = 'cGFzc3dvcmQ='  # base64 encoded
 host = 'http://teamcity.host:8111/'
 
 
