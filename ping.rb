@@ -39,7 +39,7 @@ begin
       sleep(1)
     else
       pingfails += 1
-      puts "timeout"
+      puts "#{Time.now.strftime('%H:%M:%S')}  -           timeout"
     end
   end
 rescue SystemExit, Interrupt
