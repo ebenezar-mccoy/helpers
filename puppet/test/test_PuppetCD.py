@@ -2,7 +2,7 @@
 import unittest
 import requests_mock
 from PuppetCD import *
-from mocks import *
+from test.mocks import *
 
 artifacts = [
     ['com.cinemacity', 'no-app', 'war'],
@@ -17,8 +17,18 @@ artifacts = [
     ['com.cinemacity', 'app-9', 'war']
 ]
 
-
 class TestPuppetCD(unittest.TestCase):
+    @classmethod
+    @requests_mock.mock()
+    def setUpClass(self, m):
+        for mock in r_mock:
+            url = nexus + mock[0]
+            m.get(url, text=mock[1])
+        for art in artifacts:
+            for art_branch in PuppetDB:
+                PuppetCD.generate_db(art_branch, art)
+        print(yaml.dump(PuppetDB, default_flow_style=False, Dumper=noalias))
+
     def test_no_app_in_nexus(self):
         for branch in ['DEVELOPMENT', 'MASTER', 'RELEASE', 'HOTFIX']:
             self.assertNotIn('no-app', PuppetDB[branch])
@@ -81,17 +91,3 @@ class TestPuppetCD(unittest.TestCase):
         for branch in ['MASTER', 'RELEASE', 'HOTFIX']:
             self.assertEqual(PuppetDB['HOTFIX']['app-9']['gav'],
                              'com.cinemacity:app-9:9.1.1.1:jar')
-
-@requests_mock.mock()
-def main(m):
-    for mock in r_mock:
-        url = nexus + mock[0]
-        m.get(url, text=mock[1])
-    for art in artifacts:
-        for art_branch in PuppetDB:
-            PuppetCD.generate_db(art_branch, art)
-    print(yaml.dump(PuppetDB, default_flow_style=False, Dumper=noalias))
-    unittest.main()
-
-if __name__ == '__main__':
-    main()
