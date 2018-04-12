@@ -2,7 +2,7 @@
 import unittest
 import requests_mock
 from PuppetCD import *
-from test_mocks import *
+from mocks import *
 
 artifacts = [
     ['com.cinemacity', 'no-app', 'war'],
@@ -81,7 +81,6 @@ class TestPuppetCD(unittest.TestCase):
         for branch in ['MASTER', 'RELEASE', 'HOTFIX']:
             self.assertEqual(PuppetDB['HOTFIX']['app-9']['gav'],
                              'com.cinemacity:app-9:9.1.1.1:jar')
-
 
 @requests_mock.mock()
 def main(m):
