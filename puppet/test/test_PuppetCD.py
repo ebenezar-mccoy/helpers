@@ -17,6 +17,7 @@ artifacts = [
     ['com.cinemacity', 'app-9', 'war']
 ]
 
+
 class TestPuppetCD(unittest.TestCase):
     @classmethod
     @requests_mock.mock()
